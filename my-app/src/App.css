@@ -6,10 +6,6 @@ body, html, #root {
   width: 100%;
   font-family: Arial, sans-serif;
   scroll-behavior: smooth;
-
-  /* 🔥 Background Image Applied */
-   background: url('/logo1.png') no-repeat center center fixed;
-  background-size: cover;
 }
 /* App container with full background */
 .app-container {
@@ -174,7 +170,7 @@ nav ul li:last-child a:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: fadeUp 1.5s ease forwards;
+  /* ❌ removed animation */
 }
 
 .contact-container h1 {
@@ -195,7 +191,6 @@ nav ul li:last-child a:hover {
   padding: 2rem;
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  animation: fadeIn 2s ease forwards;
 }
 
 .contact-form input,
