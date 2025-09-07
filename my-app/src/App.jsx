@@ -3,17 +3,18 @@ import { Send } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import "./App.css";
 import logo from "./assets/logo.png";
-import bgImage from "./assets/logo1.png";         // ✅ Desktop background
-import bgImageMobile from "./assets/412x915.jpg"; // ✅ Mobile background
+import bgImage from "./assets/logo1.png";         // Desktop background
+import bgImageMobile from "./assets/412x915.jpg"; // Mobile background
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState("home");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // ✅ Refs for uncontrolled form
+  // Refs for uncontrolled form
   const nameRef = useRef();
   const emailRef = useRef();
   const phoneRef = useRef();
+  const cityRef = useRef();       // ✅ Fixed missing ref
   const ticketsRef = useRef();
   const messageRef = useRef();
 
@@ -25,16 +26,17 @@ const App = () => {
       name: nameRef.current.value,
       email: emailRef.current.value,
       phone: phoneRef.current.value,
+      city: cityRef.current.value,   // ✅ Added city
       tickets: ticketsRef.current.value,
       message: messageRef.current.value,
     };
 
     emailjs
       .send(
-        "service_44xj69q", // ✅ Your EmailJS Service ID
-        "template_8wyadzh", // ✅ Your EmailJS Template ID
+        "service_44xj69q",      // Your EmailJS Service ID
+        "template_8wyadzh",     // Your EmailJS Template ID
         formValues,
-        "rwvUSOXqAm_qXGTY4" // ✅ Your Public Key
+        "rwvUSOXqAm_qXGTY4"    // Your Public Key
       )
       .then(() => {
         console.log("✅ Email sent successfully!");
@@ -74,20 +76,16 @@ const App = () => {
     </nav>
   );
 
-  // ✅ Wrapper with background image (desktop + mobile handled via CSS)
-const AppWrapper = ({ children }) => (
-  <div className="app-wrapper">
-    {children}
-  </div>
-);
-
-
+  // Wrapper with background image
+  const AppWrapper = ({ children }) => (
+    <div className="app-wrapper">{children}</div>
+  );
 
   return (
     <AppWrapper>
       <Navbar />
 
-      {/* ✅ Home Page */}
+      {/* Home Page */}
       {currentPage === "home" && (
         <div className="hero">
           <div className="overlay"></div>
@@ -105,7 +103,7 @@ const AppWrapper = ({ children }) => (
         </div>
       )}
 
-      {/* ✅ Contact Page */}
+      {/* Contact Page */}
       {currentPage === "contact" && (
         <div className="contact-container">
           <h1>Reserve Your Tickets</h1>
@@ -151,9 +149,37 @@ const AppWrapper = ({ children }) => (
                 placeholder="+91 9876543210"
               />
 
+              {/* City Selection */}
+              <label htmlFor="city">Select City</label>
+              <select
+                id="city"
+                name="city"
+                ref={cityRef}
+                defaultValue="Bangalore"
+                required
+              >
+                <option value="Belagavi" disabled>
+                  Belagavi → ❌ not opened for booking
+                </option>
+                <option value="Mysore" disabled>
+                  Mysore → ❌ not opened for booking
+                </option>
+                <option value="Bangalore">
+                  Bangalore → ✅ booking available
+                </option>
+                <option value="Shivamogga" disabled>
+                  Shivamogga → ❌ not opened for booking
+                </option>
+              </select>
+
               {/* Tickets */}
               <label htmlFor="tickets">Number of Tickets</label>
-              <select id="tickets" name="tickets" ref={ticketsRef} defaultValue="1">
+              <select
+                id="tickets"
+                name="tickets"
+                ref={ticketsRef}
+                defaultValue="1"
+              >
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                   <option key={num} value={num}>
                     {num} Ticket{num > 1 ? "s" : ""}{" "}
