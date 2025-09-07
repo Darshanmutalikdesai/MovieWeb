@@ -3,7 +3,8 @@ import { Send } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import "./App.css";
 import logo from "./assets/logo.png";
-import bgImage from "./assets/logo1.png";
+import bgImage from "./assets/logo1.png";         // ✅ Desktop background
+import bgImageMobile from "./assets/412x915.jpg"; // ✅ Mobile background
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState("home");
@@ -73,19 +74,14 @@ const App = () => {
     </nav>
   );
 
-  // Wrapper with background
-  const AppWrapper = ({ children }) => (
-    <div
-      style={{
-        background: `url(${bgImage}) no-repeat center center fixed`,
-        backgroundSize: "cover",
-        minHeight: "100vh",
-        width: "100%",
-      }}
-    >
-      {children}
-    </div>
-  );
+  // ✅ Wrapper with background image (desktop + mobile handled via CSS)
+const AppWrapper = ({ children }) => (
+  <div className="app-wrapper">
+    {children}
+  </div>
+);
+
+
 
   return (
     <AppWrapper>
@@ -157,15 +153,14 @@ const App = () => {
 
               {/* Tickets */}
               <label htmlFor="tickets">Number of Tickets</label>
-<select id="tickets" name="tickets" ref={ticketsRef} defaultValue="1">
-  {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-    <option key={num} value={num}>
-      {num} Ticket{num > 1 ? "s" : ""}{" "}
-      {num <= 5 ? "(Free)" : `(₹${(num - 5) * 2500})`}
-    </option>
-  ))}
-</select>
-
+              <select id="tickets" name="tickets" ref={ticketsRef} defaultValue="1">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                  <option key={num} value={num}>
+                    {num} Ticket{num > 1 ? "s" : ""}{" "}
+                    {num <= 5 ? "(Free)" : `(₹${(num - 5) * 2500})`}
+                  </option>
+                ))}
+              </select>
 
               {/* Message */}
               <label htmlFor="message">Special Requests</label>
